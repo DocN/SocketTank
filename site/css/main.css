@@ -5,19 +5,22 @@
     border-style:solid;
     border-width:1px;
     border-color:black;
+    position:absolute;
 }
 .spacing {
-    height:30vh;
+    height:400px;
     width:100%;
 }
 
 #enemyTank {
+    margin-left:100px;
     width:125px;
     height:100px;
     background-color:white;
     border-style:solid;
     border-width:1px;
     border-color:black;
+    position:absolute;
 }
 #middle {
     width:100%;
@@ -30,6 +33,7 @@ hr {
     /* Set the hr color */
     color: #333; /* old IE */
     background-color: #333; /* Modern Browsers */
+    width:100%;
 }
 
 #loginPrompt {
@@ -41,7 +45,7 @@ hr {
 }
 
 .buttonWidth {  
-    width:50%;
+    width:40%;
     font-size:20px;
 }
 
@@ -51,6 +55,17 @@ hr {
 }
 
 #playerNameInput {
-    width:40%;
+    width:30%;
     font-size:20px;
+}
+
+#gameFrame {
+    height:1000px;
+    width:1200px;
+}
+
+.height100 {
+    height:100px;
+    min-width:1200px;
+    width:1200px;
 }

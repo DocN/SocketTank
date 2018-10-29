@@ -68,17 +68,27 @@ function createInputBox() {
 
 function createGameFrame() {
     let gameFrame = getGameFrame();
+    let enemyTankContainer = createContainer100();
     let enemyTankRow = createEnemyTankRow();
+    enemyTankContainer.appendChild(enemyTankRow);
     let spacingRow = createSpacingRow();
     let middleLineRow = createMiddleLineRow();
     let spacingRow2 = createSpacingRow();
+    let myTankContainer = createContainer100();
     let myTankRow = createMyTankRow();
+    myTankContainer.appendChild(myTankRow);
     
-    gameFrame.appendChild(enemyTankRow);
+    gameFrame.appendChild(enemyTankContainer);
     gameFrame.appendChild(spacingRow);
     gameFrame.appendChild(middleLineRow);
     gameFrame.appendChild(spacingRow2);
-    gameFrame.appendChild(myTankRow);
+    gameFrame.appendChild(myTankContainer);
+}
+
+function createContainer100() {
+    let container = document.createElement("div");
+    container.className = "container height100";
+    return container;
 }
 function getGameFrame() {
     return document.getElementById("gameFrame");
