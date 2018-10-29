@@ -1,6 +1,5 @@
 $(document).ready(function() {
     $(function () {
-        console.log("here");
         var socket = io();
         $('form').submit(function(){
         socket.emit('chat message', $('#m').val());
