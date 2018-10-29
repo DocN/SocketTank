@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
   <head>
-    <title>Socket.IO chat</title>
+    <title>SocketTank.io</title>
     <style>
       * { margin: 0; padding: 0; box-sizing: border-box; }
       body { font: 13px Helvetica, Arial; }
@@ -24,6 +24,7 @@
     <!-- MVC  -->
     <script type="text/javascript" src="js/Controller/IndexController.js"></script>
     <script type="text/javascript" src="js/View/IndexView.js"></script>
+    <script type="text/javascript" src="js/Model/player.js"></script>
   </head>
   <body onload="loadView()"> 
     <ul id="messages"></ul>
@@ -31,6 +32,7 @@
       <input id="m" autocomplete="off" /><button>Send</button>
     </form>
 
+    <div class="container" id="loginPrompt"></div>
     <div class="container" id="gameFrame"></div>
     
   </body>

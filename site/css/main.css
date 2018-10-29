@@ -31,3 +31,26 @@ hr {
     color: #333; /* old IE */
     background-color: #333; /* Modern Browsers */
 }
+
+#loginPrompt {
+    text-align: center;
+}
+
+.viewheight40 {
+    margin-top:40vh;
+}
+
+.buttonWidth {  
+    width:50%;
+    font-size:20px;
+}
+
+.spacing10 {
+    height:10px;
+    width:100%;
+}
+
+#playerNameInput {
+    width:40%;
+    font-size:20px;
+}

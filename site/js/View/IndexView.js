@@ -1,7 +1,71 @@
 function loadView() {
     console.log("loading view");
-    createGameFrame();
+    createPlayerPrompt();
+    
 }
+
+
+function createPlayerPrompt() {
+    let loginPrompt = document.getElementById("loginPrompt");
+    loginPrompt.className = "viewheight40";
+    loginPrompt.appendChild(createTitle());
+    loginPrompt.appendChild(createRowSpacing10());
+    loginPrompt.appendChild(createInputBox());
+    loginPrompt.appendChild(createRowSpacing10());
+    loginPrompt.appendChild(createSubmitButtonRow());
+}
+
+function createRowSpacing10() {
+    let row = createRow();
+    let col = createCol12();
+    col.appendChild(createSpacing10());
+    row.appendChild(col);
+    return row;
+}
+
+function createSpacing10() {
+    let spacing10 = document.createElement("div");
+    spacing10.className = "spacing10";
+    return spacing10;
+}
+function createSubmitButtonRow() {
+    let row = createRow();
+    let col = createCol12();
+    col.appendChild(createSubmitButton());
+    row.appendChild(col);
+    return row;
+}
+
+function createSubmitButton() {
+    let btn = document.createElement("button");
+    btn.className = "btn btn-primary buttonWidth";
+    btn.innerText = "Play!";
+    btn.setAttribute("onClick", "SubmitUser()")
+    return btn;
+}
+function createTitle() {
+    let title = document.createElement("h1");
+    title.id = "promptTitle";
+    title.innerText = "Please enter your name";
+    let row = createRow();
+    let col = createCol12();
+    col.appendChild(title);
+    row.appendChild(col);
+    return row;
+}
+
+function createInputBox() {
+    let name = document.createElement("input");
+    name.setAttribute("type", "text");
+    name.id = "playerNameInput";
+    name.value = "Player";
+    let row = createRow();
+    let col = createCol12();
+    col.appendChild(name);
+    row.appendChild(col);
+    return row;
+}
+
 function createGameFrame() {
     let gameFrame = getGameFrame();
     let enemyTankRow = createEnemyTankRow();
@@ -85,4 +149,10 @@ function createCol12() {
     let col = document.createElement("div");
     col.className = "col-12";
     return col;
+}
+
+function clearLoginPrompt() {
+    let loginPrompt = document.getElementById("loginPrompt");
+    loginPrompt.innerHTML = "";
+    loginPrompt.className = "";
 }
