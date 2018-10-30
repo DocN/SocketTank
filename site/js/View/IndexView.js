@@ -142,6 +142,10 @@ function createMyTankRow() {
 function createMyTank() {
     let tank = document.createElement("div");
     tank.id = "myTank";
+    let tankline = document.createElement("div");
+    tankline.className = "line-in-middle";
+    tankline.id = "myTankLine";
+    tank.appendChild(tankline);
     return tank;
 }
 
