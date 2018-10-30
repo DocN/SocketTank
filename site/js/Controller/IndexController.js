@@ -1,6 +1,6 @@
 var socket = io();
 var myPlayer; 
-
+var myTankO = new Tank(0, true);
 $(document).ready(function() {
     $(function () {
         $('form').submit(function(){
@@ -20,6 +20,33 @@ $(document).ready(function() {
     });
 });
 
+$(function() {
+    $(window).keydown(function(e) {
+      if (e.keyCode == 39) {
+        move(10, 'left', $('#myTank'));
+      } 
+      else if (e.keyCode == 37) {
+        move(-10, 'left', $('#myTank'));    
+      }
+      
+    })
+  
+  })
+
+function move(offset, direction, target) {
+    let myLocalTank = document.getElementById("myTank");
+    if(myLocalTank.offsetLeft == null) {
+        return;
+    }
+    if(myLocalTank.offsetLeft >= 1030 && offset >= 10) {
+        return;
+    }
+    if(myLocalTank.offsetLeft <= 0 && offset <= -10) {
+        return;
+    }
+    $(target).css(direction, (parseInt($(target).css(direction)) + offset) + 'px')
+    
+}
 
 function SubmitUser() {
     myPlayer = new Player($('#playerNameInput').val());
@@ -32,3 +59,6 @@ function startGame() {
     createGameFrame();
 }
 
+function moveMyTank(movement) {
+
+}

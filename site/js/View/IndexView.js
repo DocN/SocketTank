@@ -7,7 +7,7 @@ function loadView() {
 
 function createPlayerPrompt() {
     let loginPrompt = document.getElementById("loginPrompt");
-    loginPrompt.className = "viewheight40";
+    loginPrompt.className = "container viewheight40";
     loginPrompt.appendChild(createTitle());
     loginPrompt.appendChild(createRowSpacing10());
     loginPrompt.appendChild(createInputBox());

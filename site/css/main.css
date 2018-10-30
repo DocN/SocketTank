@@ -8,7 +8,7 @@
     position:absolute;
 }
 .spacing {
-    height:400px;
+    height:300px;
     width:100%;
 }
 
@@ -28,6 +28,7 @@
 }
 
 hr {
+    text-align:center;
     border: none;
     height: 1px;
     /* Set the hr color */
@@ -66,6 +67,5 @@ hr {
 
 .height100 {
     height:100px;
-    min-width:1200px;
     width:1200px;
 }
