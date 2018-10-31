@@ -1,6 +1,9 @@
 var socket = io();
 var myPlayer; 
 var myTankO = new Tank(0, true);
+var fireTimer;
+var currentMouseLocX;
+var currentMouseLocY;
 
 $(document).ready(function() {
     $(function () {
@@ -21,38 +24,33 @@ $(document).ready(function() {
     });
 });
 
-$(function() {
-    $(window).keydown(function(e) {
-      if (e.keyCode == 39) {
-        move(10, 'left', $('#myTank'));
-      } 
-      else if (e.keyCode == 37) {
-        move(-10, 'left', $('#myTank'));    
-      }
-      
-    })
-})
+
 
 $(function() {
-    $("#gameFrame").keydown(function(e) {
-        var asyncFunct = new Promise(function(resolve, reject) {
-            if (e.keyCode == 39) {
-                move(10, 'left', $('#myTank'));
-              } 
-              else if (e.keyCode == 37) {
-                move(-10, 'left', $('#myTank'));    
-              }
-        });
+    var asyncFunct = new Promise(function(resolve, reject) {
+        $(function() {
+            $(window).keydown(function(e) {
+                if (e.keyCode == 39) {
+                    myTankO.readyToFire = false;
+                    move(10, 'left', $('#myTank'));
+                    reCalculateAngleMove();
+                    myTankO.readyToFire = true;
+                } 
+                else if (e.keyCode == 37) {
+                    myTankO.readyToFire = false;
+                    move(-10, 'left', $('#myTank'));    
+                    reCalculateAngleMove();
+                    myTankO.readyToFire = true;
+                }
+            })
+        })
     });
 });
 
 $(function() {
-    $("#gameFrame").mousemove(function(e) {
+    $("#bodyID").mousemove(function(e) {
         var asyncFunct = new Promise(function(resolve, reject) {
-            var offset = $("#gameFrame").offset();
-            var relativeX = (e.pageX - offset.left);
-            var relativeY = (e.pageY - offset.top);
-            myTankO.calculateAngle(relativeX,relativeY);		
+            reCalculateAngle(e);
         });
     });
 });
@@ -65,8 +63,30 @@ $(function() {
     });
 });
 
+function reCalculateAngleMove() {
+    console.log(currentMouseLocX + " " + currentMouseLocY);
+    myTankO.calculateAngle(currentMouseLocX,currentMouseLocY);	
+}
+
+function reCalculateAngle(e) {
+    var offset = $("#gameFrame").offset();
+    currentMouseLocX = (e.pageX - offset.left);
+    currentMouseLocY = (e.pageY - offset.top);
+    console.log(currentMouseLocX + " " + currentMouseLocY);
+    myTankO.calculateAngle(currentMouseLocX,currentMouseLocY);	
+}
+
 function fire() {
+    stopFireTimer();
+    startFireTimer();
     myTankO.fireShell();
+    if(this.readyToFire == false) {
+
+    }
+    else {
+        
+    }
+    
 }
 function move(offset, direction, target) {
     let myLocalTank = document.getElementById("myTank");
@@ -99,7 +119,6 @@ function moveMyTank(movement) {
     
 }
 
-/*
 function cursorLoc(e) {
     var x = e.clientX;
     var y = e.clientY;
@@ -107,4 +126,12 @@ function cursorLoc(e) {
     console.log("mouse coord " + x + " " + y);
 }
 
-*/
+function stopFireTimer() {
+    window.clearInterval(fireTimer);
+}
+
+function startFireTimer() {
+    fireTimer= setInterval(function() {
+        myTankO.moveShell();
+    }, 20);  
+}

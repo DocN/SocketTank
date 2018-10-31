@@ -1,12 +1,15 @@
 class Tank {
     constructor(leftOffset, tankOwner) {
-        this.angle = 50;
+        this.angle = 0;
         this.leftOffset = leftOffset;
-        this.fireRate = 0.1;
+        this.fireRate = 5;
         this.readyToFire = true;
         this.tankSizeX = 100;
         this.tankSizeY = 100;
         this.tankOwner = tankOwner;
+        this.firedX = 0;
+        this.firedY = 830;
+        this.firedAngle = 0;
     }
 
     calculateAngle(mouseX, mouseY) {
@@ -23,32 +26,32 @@ class Tank {
         console.log(tankX + " " + tankY);
         this.angle = angleDeg;
         tankLine.style.transform = "rotate("+ angleDeg +"deg)";
-        console.log(angleDeg);
+        tankLine.style.transformOrigin ="top center";
     }
 
-    getRise() {
-        var gcd = function(a, b) {
-            if (b < 0.0000001) return a;                // Since there is a limited precision we need to limit the value.
-          
-            return gcd(b, Math.floor(a % b));           // Discard any fractions due to limitations in precision.
-          };
-          
-          var fraction = 155.55;
-          var len = fraction.toString().length - 2;
-          
-          var denominator = Math.pow(10, len);
-          var numerator = fraction * denominator;
-          
-          var divisor = gcd(numerator, denominator);    // Should be 5
-          
-          numerator /= divisor;                         // Should be 687
-          denominator /= divisor;      
-    }
     fireShell() {
+        this.readyToFire = false;
         let tankShell = document.getElementById("myShell");
         tankShell.style.transform = "rotate("+ this.angle +"deg)";
-        let tankLine = document.getElementById("myTankLine");
-        tankShell.style.top = "730px";
-        Math.tan(angleDeg/( 180 / Math.PI));
+        let tankLine = document.getElementById("myTank");
+        var offset = $("#gameFrame").offset();
+        var relativeX = (window.innerWidth- offset.left);
+        console.log(((window.innerWidth - relativeX) + 75)  + tankLine.offsetLeft + "px");
+        this.firedX = parseInt(((window.innerWidth - relativeX) + 75)  + tankLine.offsetLeft);
+        this.firedY = 825;
+        tankShell.style.left = this.firedX + "px";
+        this.firedAngle = this.angle - 90;
+    }
+
+    moveShell() {
+        let tankShell = document.getElementById("myShell");
+        //console.log(parseInt(tankShell.style.left));
+        let speed = this.fireRate; // pixels per tick
+        let xVelocity = speed * Math.cos((this.firedAngle)/( 180 / Math.PI));
+        let yVelocity = speed * Math.sin((this.firedAngle)/( 180 / Math.PI));
+        this.firedY = this.firedY - yVelocity;
+        this.firedX = this.firedX - xVelocity;
+        tankShell.style.top = this.firedY + "px";
+        tankShell.style.left = this.firedX +  "px";
     }
   }
