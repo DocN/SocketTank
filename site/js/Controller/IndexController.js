@@ -57,8 +57,17 @@ $(function() {
     });
 });
 
+$(function() {
+    $("#gameFrame").click(function(e) {
+        var asyncFunct = new Promise(function(resolve, reject) {
+            fire();
+        });
+    });
+});
 
-
+function fire() {
+    myTankO.fireShell();
+}
 function move(offset, direction, target) {
     let myLocalTank = document.getElementById("myTank");
     if(myLocalTank.offsetLeft == null) {
@@ -87,7 +96,7 @@ function startGame() {
 }
 
 function moveMyTank(movement) {
-    myTankO
+    
 }
 
 /*

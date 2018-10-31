@@ -78,6 +78,7 @@ function createGameFrame() {
     let myTankRow = createMyTankRow();
     myTankContainer.appendChild(myTankRow);
     
+    gameFrame.appendChild(createMyShell());
     gameFrame.appendChild(enemyTankContainer);
     gameFrame.appendChild(spacingRow);
     gameFrame.appendChild(middleLineRow);
@@ -169,4 +170,11 @@ function clearLoginPrompt() {
     let loginPrompt = document.getElementById("loginPrompt");
     loginPrompt.innerHTML = "";
     loginPrompt.className = "";
+}
+
+function createMyShell() {
+    let tankShell = document.createElement("div");
+    tankShell.id = "myShell";
+    tankShell.className = "bullet";
+    return tankShell;
 }

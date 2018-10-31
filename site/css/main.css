@@ -75,11 +75,25 @@ hr {
     height:150px;
     top:-50px;
     position:absolute;
-	  background: linear-gradient(to right, 
-	                              transparent 0%, 
-	                              transparent calc(50% - 0.81px), 
-	                              black calc(50% - 0.8px), 
-	                              black calc(50% + 0.8px), 
-	                              transparent calc(50% + 0.81px), 
-                                  transparent 100%); 
+    background: linear-gradient(to right, 
+                                transparent 0%, 
+                                transparent calc(50% - 0.81px), 
+                                black calc(50% - 0.8px), 
+                                black calc(50% + 0.8px), 
+                                transparent calc(50% + 0.81px), 
+                                transparent 100%); 
+}
+
+.bullet {
+    width:125px;
+    height:150px;
+    top:-50px;
+    position:absolute;
+    background: linear-gradient(to right, 
+                                transparent 0%, 
+                                transparent calc(50% - 0.81px), 
+                                black calc(50% - 0.8px), 
+                                black calc(50% + 0.8px), 
+                                transparent calc(50% + 0.81px), 
+                                transparent 100%); 
 }

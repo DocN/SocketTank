@@ -21,7 +21,34 @@ class Tank {
             return;
         }
         console.log(tankX + " " + tankY);
+        this.angle = angleDeg;
         tankLine.style.transform = "rotate("+ angleDeg +"deg)";
         console.log(angleDeg);
+    }
+
+    getRise() {
+        var gcd = function(a, b) {
+            if (b < 0.0000001) return a;                // Since there is a limited precision we need to limit the value.
+          
+            return gcd(b, Math.floor(a % b));           // Discard any fractions due to limitations in precision.
+          };
+          
+          var fraction = 155.55;
+          var len = fraction.toString().length - 2;
+          
+          var denominator = Math.pow(10, len);
+          var numerator = fraction * denominator;
+          
+          var divisor = gcd(numerator, denominator);    // Should be 5
+          
+          numerator /= divisor;                         // Should be 687
+          denominator /= divisor;      
+    }
+    fireShell() {
+        let tankShell = document.getElementById("myShell");
+        tankShell.style.transform = "rotate("+ this.angle +"deg)";
+        let tankLine = document.getElementById("myTankLine");
+        tankShell.style.top = "730px";
+        Math.tan(angleDeg/( 180 / Math.PI));
     }
   }

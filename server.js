@@ -29,7 +29,7 @@ io.on('connection', function(socket){
 
 io.on('connection', function(socket){
   socket.on('player name', function(newplayer){
-    if(players.length >= 2) {
+    if(players.length >= 10000) {
       io.emit('connect failed', newplayer.username);
       console.log(newplayer.username + " Failed to join game is full");
     }
