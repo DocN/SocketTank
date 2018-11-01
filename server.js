@@ -47,8 +47,17 @@ io.on('connection', function(socket){
   });
   socket.on('updateTankAngle', function(tankAngleData){
     //let tankAngleData = {'userID': myPlayer.userID, 'tankAngleInverse': inverseAngle, 'playerNumber': myTankO.tankOwner };
-    console.log("player: " + tankAngleData.userID + " has a new angle " + tankAngleData.tankAngleInverse)
+    //console.log("player: " + tankAngleData.userID + " has a new angle " + tankAngleData.tankAngleInverse)
     io.emit('updateTankAngle', tankAngleData);
+  });
+  /*
+      let tankFireData = {'userID': myPlayer.userID, 'tankAngleInverse': inverseAngle, 'playerNumber': myTankO.tankOwner };
+    socket.emit('tankFired', tankFireData);
+  */
+  socket.on('tankFired', function(tankFireData){
+    //let tankAngleData = {'userID': myPlayer.userID, 'tankAngleInverse': inverseAngle, 'playerNumber': myTankO.tankOwner };
+    console.log("player: " + tankFireData.userID + " has fired " + tankFireData.tankAngleInverse)
+    io.emit('tankFired', tankFireData);
   });
 });
 

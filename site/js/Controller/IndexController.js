@@ -3,6 +3,7 @@ var myPlayer;
 var myTankO = new Tank(0, true);
 var enemyTankO = new EnemyTank(0, true);
 var fireTimer;
+var enemyFireTimer;
 var currentMouseLocX;
 var currentMouseLocY;
 
@@ -56,6 +57,19 @@ $(document).ready(function() {
             }
         });
 
+        socket.on('tankFired', function(tankFireData){
+            if(tankFireData.playerNumber == true && myTankO.tankOwner == false) {
+                stopEnemyFireTimer();
+                enemyTankO.fireShell();
+                startEnemyFireTimer();
+            }
+            if(tankFireData.playerNumber == false && myTankO.tankOwner == true) {
+                stopEnemyFireTimer();
+                enemyTankO.fireShell();
+                startEnemyFireTimer();
+            }
+        });
+
         socket.on('chat message', function(msg){
         $('#messages').append($('<li>').text(msg));
         });
@@ -102,6 +116,7 @@ $(function() {
     $("#bodyID").click(function(e) {
         var asyncFunct = new Promise(function(resolve, reject) {
             fire();
+            emiteFired();
         });
     });
 });
@@ -125,6 +140,12 @@ function emitNewAngle() {
     socket.emit('updateTankAngle', tankAngleData);
 }
 
+function emiteFired() {
+    let inverseAngle = myTankO.inverseAngle();
+    let tankFireData = {'userID': myPlayer.userID, 'tankAngleInverse': inverseAngle, 'playerNumber': myTankO.tankOwner };
+    socket.emit('tankFired', tankFireData);
+}
+
 function fire() {
     stopFireTimer();
     startFireTimer();
@@ -137,6 +158,7 @@ function fire() {
     }
     
 }
+
 function move(offset, direction, target) {
     let myLocalTank = document.getElementById("myTank");
     if(myLocalTank.offsetLeft == null) {
@@ -171,6 +193,7 @@ function updateTankMovement() {
     socket.emit('updateTank', tankMoveData);
 }
 
+
 function startGame() {
     clearLoginPrompt();
     createGameFrame();
@@ -190,5 +213,15 @@ function stopFireTimer() {
 function startFireTimer() {
     fireTimer= setInterval(function() {
         myTankO.moveShell();
+    }, 20);  
+}
+
+function stopEnemyFireTimer() {
+    window.clearInterval(enemyFireTimer);
+}
+
+function startEnemyFireTimer() {
+    enemyFireTimer= setInterval(function() {
+        enemyTankO.moveShell();
     }, 20);  
 }

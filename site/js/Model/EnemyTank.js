@@ -26,27 +26,31 @@ class EnemyTank {
 
     fireShell() {
         this.readyToFire = false;
-        let tankShell = document.getElementById("myShell");
+        let tankShell = document.getElementById("enemyShell");
         tankShell.style.transform = "rotate("+ this.angle +"deg)";
         let tankLine = document.getElementById("enemyTank");
         var offset = $("#gameFrame").offset();
         var relativeX = (window.innerWidth- offset.left);
-        console.log(((window.innerWidth - relativeX) + 75)  + tankLine.offsetLeft + "px");
-        this.firedX = parseInt(((window.innerWidth - relativeX) + 75)  + tankLine.offsetLeft);
-        this.firedY = 825;
+        console.log("offset" + offset.left);
+        console.log(this.firedX);
+        this.firedX = parseInt(((window.innerWidth - relativeX) + 100)  + tankLine.offsetLeft);
+        this.firedY = 0;
         tankShell.style.left = this.firedX + "px";
         this.firedAngle = this.angle - 90;
     }
 
     moveShell() {
-        let tankShell = document.getElementById("myShell");
+        let tankShell = document.getElementById("enemyShell");
         //console.log(parseInt(tankShell.style.left));
         let speed = this.fireRate; // pixels per tick
         let xVelocity = speed * Math.cos((this.firedAngle)/( 180 / Math.PI));
         let yVelocity = speed * Math.sin((this.firedAngle)/( 180 / Math.PI));
-        this.firedY = this.firedY - yVelocity;
+        this.firedY = this.firedY + yVelocity;
         this.firedX = this.firedX - xVelocity;
-        tankShell.style.top = this.firedY + "px";
+        tankShell.style.top = (this.firedY * -1) + "px";
         tankShell.style.left = this.firedX +  "px";
+        if(tankShell.offsetTop >= 1000) {
+            stopEnemyFireTimer();
+        }
     }
   }

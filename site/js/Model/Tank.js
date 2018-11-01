@@ -53,6 +53,9 @@ class Tank {
         this.firedX = this.firedX - xVelocity;
         tankShell.style.top = this.firedY + "px";
         tankShell.style.left = this.firedX +  "px";
+        if(tankShell.style.top <= 0 || tankShell.style.left >= 1000) {
+            stopFireTimer();
+        }
     }
 
     inverseAngle() {
