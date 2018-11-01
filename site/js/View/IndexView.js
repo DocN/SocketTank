@@ -40,7 +40,7 @@ function createSubmitButton() {
     let btn = document.createElement("button");
     btn.className = "btn btn-primary buttonWidth";
     btn.innerText = "Play!";
-    btn.setAttribute("onClick", "SubmitUser()")
+    btn.setAttribute("onClick", "submitUser()")
     return btn;
 }
 function createTitle() {

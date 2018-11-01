@@ -1,7 +1,8 @@
 class Player {
-    constructor(username) {
+    constructor(username, userID, playerNumber) {
         this.username = username;
-        this.userID = this.randomID();
+        this.userID = userID;
+        this.playerNumber = playerNumber;
     }
     randomID() {
         // Math.random should be unique because of its seeding algorithm.

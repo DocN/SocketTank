@@ -1,6 +1,7 @@
 var socket = io();
 var myPlayer; 
 var myTankO = new Tank(0, true);
+var enemyTankO = new EnemyTank(0, true);
 var fireTimer;
 var currentMouseLocX;
 var currentMouseLocY;
@@ -12,11 +13,38 @@ $(document).ready(function() {
         $('#m').val('');
         return false;
         });
-        socket.on('connect success', function(msg){
-            if(msg == myPlayer.userID) {
-
+        socket.on('connect success', function(connectSuccessData){
+            //let connectSuccessData = {'userID': newPlayer.userID, 'playerNumber': newPlayer.playerNumber}
+            if(connectSuccessData.userID == myPlayer.userID) {
+                startGame();
+                if(connectSuccessData.playerNumber == 0) {
+                    myTankO.tankOwner = true;
+                }
+                else {
+                    myTankO.tankOwner = false;
+                }
             }
-            startGame();
+        });
+        //let tankMoveData = {'userID': myPlayer.userID, 'tankLeftOffset': myTankO.leftOffset, 'playerNumber': myTankO.tankOwner };
+        socket.on('updateTank', function(tankMoveData){
+            
+            if(tankMoveData.playerNumber == true && myTankO.tankOwner == false) {
+                console.log("here" + enemyTankO.leftOffset + " " + tankMoveData.tankLeftOffset);
+                if(enemyTankO.leftOffset < tankMoveData.tankLeftOffset) {
+                    moveEnemyTank(10, 'right', $('#enemyTank'));
+                }
+                else if(enemyTankO.leftOffset > tankMoveData.tankLeftOffset) {
+                    moveEnemyTank(-10, 'right', $('#enemyTank'));
+                }
+            }
+            if(tankMoveData.playerNumber == false && myTankO.tankOwner == true) {
+                if(enemyTankO.leftOffset < tankMoveData.tankLeftOffset) {
+                    moveEnemyTank(10, 'right', $('#enemyTank'));
+                }
+                else if(enemyTankO.leftOffset > tankMoveData.tankLeftOffset) {
+                    moveEnemyTank(-10, 'right', $('#enemyTank'));
+                }
+            }
         });
         socket.on('chat message', function(msg){
         $('#messages').append($('<li>').text(msg));
@@ -33,12 +61,14 @@ $(function() {
                 if (e.keyCode == 39) {
                     myTankO.readyToFire = false;
                     move(10, 'left', $('#myTank'));
+                    updateTankMovement();
                     reCalculateAngleMove();
                     myTankO.readyToFire = true;
                 } 
                 else if (e.keyCode == 37) {
                     myTankO.readyToFire = false;
                     move(-10, 'left', $('#myTank'));    
+                    updateTankMovement();
                     reCalculateAngleMove();
                     myTankO.readyToFire = true;
                 }
@@ -56,7 +86,7 @@ $(function() {
 });
 
 $(function() {
-    $("#gameFrame").click(function(e) {
+    $("#bodyID").click(function(e) {
         var asyncFunct = new Promise(function(resolve, reject) {
             fire();
         });
@@ -101,22 +131,30 @@ function move(offset, direction, target) {
     }
     myTankO.leftOffset = parseInt(myTankO.leftOffset) + offset;
     $(target).css(direction, (parseInt($(target).css(direction)) + offset) + 'px')
-    
 }
 
-function SubmitUser() {
+function moveEnemyTank(offset, direction, target) {
+    console.log("move tank");
+    let myLocalTank = document.getElementById("enemyTank");
+    enemyTankO.leftOffset = parseInt(enemyTankO.leftOffset) + offset;
+    console.log(enemyTankO.leftOffset);
+    $(target).css(direction, (parseInt($(target).css(direction)) + offset) + 'px')
+}
+
+function submitUser() {
     myPlayer = new Player($('#playerNameInput').val());
     let user = { 'username': myPlayer.username, 'userID': myPlayer.userID };
     socket.emit('player name', user);
 }
 
+function updateTankMovement() {
+    let tankMoveData = {'userID': myPlayer.userID, 'tankLeftOffset': myTankO.leftOffset, 'playerNumber': myTankO.tankOwner };
+    socket.emit('updateTank', tankMoveData);
+}
+
 function startGame() {
     clearLoginPrompt();
     createGameFrame();
-}
-
-function moveMyTank(movement) {
-    
 }
 
 function cursorLoc(e) {

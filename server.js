@@ -1,5 +1,3 @@
-
-
 var express = require('express'),
     path = require('path'),
     app = express();
@@ -29,16 +27,23 @@ io.on('connection', function(socket){
 
 io.on('connection', function(socket){
   socket.on('player name', function(newplayer){
-    if(players.length >= 10000) {
+    if(players.length >= 2) {
       io.emit('connect failed', newplayer.username);
       console.log(newplayer.username + " Failed to join game is full");
     }
     else {
-      let newPlayer = new Player(newplayer.username, newplayer.userID);
+      //let user = { 'username': myPlayer.username, 'userID': myPlayer.userID };
+      let newPlayer = new Player(newplayer.username, newplayer.userID, players.length);
       players.push(newPlayer);
       console.log(newPlayer.username + " has joined the game");
-      io.emit('connect success', newplayer.username);
+      let connectSuccessData = {'userID': newPlayer.userID, 'playerNumber': newPlayer.playerNumber}
+      io.emit('connect success', connectSuccessData);
     }
+  });
+  socket.on('updateTank', function(tankMoveData){
+      //let tankMoveData = {'userID': myPlayer.userID, 'tankLeftOffset': myTankO.leftOffset, 'playerNumber': myTankO.tankOwner };
+      console.log("player: " + tankMoveData.playerNumber + " " + tankMoveData.tankLeftOffset);
+      io.emit('updateTank', tankMoveData);
   });
 });
 
