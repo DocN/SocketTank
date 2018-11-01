@@ -84,6 +84,19 @@ hr {
                                 transparent calc(50% + 5px), 
                                 transparent 100%); 
 }
+.line-in-middleEnemy {
+    width:125px;
+    height:200px;
+    left:-5px;
+    position:absolute;
+    background: linear-gradient(to right, 
+                                transparent 0%, 
+                                transparent calc(50% - 0.81px), 
+                                black calc(50% - 5px), 
+                                black calc(50% + 5px), 
+                                transparent calc(50% + 5px), 
+                                transparent 100%); 
+}
 
 .bullet {
     width:10px;

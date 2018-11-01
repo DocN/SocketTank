@@ -12,21 +12,16 @@ class EnemyTank {
         this.firedAngle = 0;
     }
 
-    calculateAngle(mouseX, mouseY) {
-        let tankX = this.leftOffset;
-        console.log(tankX);
-        let tankY = 830; 
-
-        // angle in degrees
-        var angleDeg = 90 + (Math.atan2(tankY - mouseY, tankX - mouseX) * 180 / Math.PI);
-        let tankLine = document.getElementById("myTankLine");
+    setNewAngle(newAngle) {
+        let tankLine = document.getElementById("enemyTankLine");
         if(tankLine == null) {
             return;
         }
-        console.log(tankX + " " + tankY);
-        this.angle = angleDeg;
-        tankLine.style.transform = "rotate("+ angleDeg +"deg)";
+        this.angle = -1 *newAngle + -90;
+        console.log(newAngle);
+        tankLine.style.transform = "rotate("+ this.angle +"deg)";
         tankLine.style.transformOrigin ="top center";
+        console.log("here dude");
     }
 
     fireShell() {

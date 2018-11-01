@@ -128,6 +128,10 @@ function createEnemyTankRow() {
 function createEnemyTank() {
     let tank = document.createElement("div");
     tank.id = "enemyTank";
+    let tankline = document.createElement("div");
+    tankline.className = "line-in-middleEnemy";
+    tankline.id = "enemyTankLine";
+    tank.appendChild(tankline);
     return tank;
 }
 

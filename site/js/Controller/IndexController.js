@@ -27,7 +27,6 @@ $(document).ready(function() {
         });
         //let tankMoveData = {'userID': myPlayer.userID, 'tankLeftOffset': myTankO.leftOffset, 'playerNumber': myTankO.tankOwner };
         socket.on('updateTank', function(tankMoveData){
-            
             if(tankMoveData.playerNumber == true && myTankO.tankOwner == false) {
                 console.log("here" + enemyTankO.leftOffset + " " + tankMoveData.tankLeftOffset);
                 if(enemyTankO.leftOffset < tankMoveData.tankLeftOffset) {
@@ -46,6 +45,17 @@ $(document).ready(function() {
                 }
             }
         });
+
+        //let tankAngleData = {'userID': myPlayer.userID, 'tankAngleInverse': inverseAngle, 'playerNumber': myTankO.tankOwner };
+        socket.on('updateTankAngle', function(tankAngleData){
+            if(tankAngleData.playerNumber == true && myTankO.tankOwner == false) {
+                enemyTankO.setNewAngle(tankAngleData.tankAngleInverse);
+            }
+            if(tankAngleData.playerNumber == false && myTankO.tankOwner == true) {
+                enemyTankO.setNewAngle(tankAngleData.tankAngleInverse);
+            }
+        });
+
         socket.on('chat message', function(msg){
         $('#messages').append($('<li>').text(msg));
         });
@@ -63,6 +73,7 @@ $(function() {
                     move(10, 'left', $('#myTank'));
                     updateTankMovement();
                     reCalculateAngleMove();
+                    emitNewAngle();
                     myTankO.readyToFire = true;
                 } 
                 else if (e.keyCode == 37) {
@@ -70,6 +81,7 @@ $(function() {
                     move(-10, 'left', $('#myTank'));    
                     updateTankMovement();
                     reCalculateAngleMove();
+                    emitNewAngle();
                     myTankO.readyToFire = true;
                 }
             })
@@ -81,6 +93,7 @@ $(function() {
     $("#bodyID").mousemove(function(e) {
         var asyncFunct = new Promise(function(resolve, reject) {
             reCalculateAngle(e);
+            emitNewAngle();
         });
     });
 });
@@ -104,6 +117,12 @@ function reCalculateAngle(e) {
     currentMouseLocY = (e.pageY - offset.top);
     console.log(currentMouseLocX + " " + currentMouseLocY);
     myTankO.calculateAngle(currentMouseLocX,currentMouseLocY);	
+}
+
+function emitNewAngle() {
+    let inverseAngle = myTankO.inverseAngle();
+    let tankAngleData = {'userID': myPlayer.userID, 'tankAngleInverse': inverseAngle, 'playerNumber': myTankO.tankOwner };
+    socket.emit('updateTankAngle', tankAngleData);
 }
 
 function fire() {

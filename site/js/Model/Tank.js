@@ -54,4 +54,12 @@ class Tank {
         tankShell.style.top = this.firedY + "px";
         tankShell.style.left = this.firedX +  "px";
     }
+
+    inverseAngle() {
+        let inverse = this.angle +180 - 90;
+        if(inverse > 360) {
+            inverse = inverse - 360;
+        }
+        return (-1*(inverse -180));
+    }
   }

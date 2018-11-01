@@ -45,6 +45,11 @@ io.on('connection', function(socket){
       console.log("player: " + tankMoveData.playerNumber + " " + tankMoveData.tankLeftOffset);
       io.emit('updateTank', tankMoveData);
   });
+  socket.on('updateTankAngle', function(tankAngleData){
+    //let tankAngleData = {'userID': myPlayer.userID, 'tankAngleInverse': inverseAngle, 'playerNumber': myTankO.tankOwner };
+    console.log("player: " + tankAngleData.userID + " has a new angle " + tankAngleData.tankAngleInverse)
+    io.emit('updateTankAngle', tankAngleData);
+  });
 });
 
 http.listen(3000, function(){
