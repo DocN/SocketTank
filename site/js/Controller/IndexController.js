@@ -1,3 +1,5 @@
+
+
 var socket = io();
 var myPlayer; 
 var myTankO = new Tank(0, true);
@@ -6,6 +8,12 @@ var fireTimer;
 var enemyFireTimer;
 var currentMouseLocX;
 var currentMouseLocY;
+var myLives = 3;
+var enemyLives = 3;
+var maxLives = 3;
+var myName = "";
+var enemyName = "";
+
 
 $(document).ready(function() {
     $(function () {
@@ -70,8 +78,15 @@ $(document).ready(function() {
             }
         });
 
-        socket.on('chat message', function(msg){
-        $('#messages').append($('<li>').text(msg));
+        socket.on('updateLives', function(tankLifeData){
+            if(tankLifeData.playerNumber == true && myTankO.tankOwner == false) {
+                myLives = parseInt(myLives) - 1;    
+                updateMyScoreView();       
+            }
+            if(tankLifeData.playerNumber == false && myTankO.tankOwner == true) {
+                myLives = parseInt(myLives) - 1;    
+                updateMyScoreView(); 
+            }
         });
     });
 });
@@ -225,3 +240,12 @@ function startEnemyFireTimer() {
         enemyTankO.moveShell();
     }, 20);  
 }
+
+function updateEnemyLives() {
+    let tankLifeData = {'userID': myPlayer.userID, 'score': enemyLives, 'playerNumber': myTankO.tankOwner };
+    socket.emit('updateLives', tankLifeData);
+}
+
+
+
+

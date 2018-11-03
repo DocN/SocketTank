@@ -109,3 +109,19 @@ body {
     min-height:100vh;
     min-width:1200px;
 }
+
+#myScoreBox {
+    top:700px;
+    left:0;
+    position:absolute;
+    width:100px;
+    height:100px;
+}
+
+#enemyScoreBox {
+    top:0;
+    left:0;
+    position:absolute;
+    width:100px;
+    height:100px;
+}

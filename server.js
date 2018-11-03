@@ -59,6 +59,14 @@ io.on('connection', function(socket){
     //console.log("player: " + tankFireData.userID + " has fired " + tankFireData.tankAngleInverse)
     io.emit('tankFired', tankFireData);
   });
+
+  socket.on('updateLives', function(tankLifeData){
+    //let tankLifeData = {'userID': myPlayer.userID, 'score': enemyLives, 'playerNumber': myTankO.tankOwner };
+    //socket.emit('updateLives', tankLifeData);
+    io.emit('updateLives', tankLifeData);
+  });
+
+
 });
 
 http.listen(3000, function(){

@@ -54,9 +54,41 @@ class Tank {
         this.firedX = this.firedX - xVelocity;
         tankShell.style.top = this.firedY + "px";
         tankShell.style.left = this.firedX +  "px";
+        if(this.isOverlapping(tankShell, document.getElementById("enemyTank"))) {
+            console.log("hit");
+            enemyLives = enemyLives - 1;
+            updateEnemyScoreView();
+            hideMyShell();
+            stopFireTimer();
+        }
         if(tankShell.style.top <= 0 || tankShell.offsetLeft >= 2000 || tankShell.offsetTop >=1000) {
             hideMyShell();
             stopFireTimer();
+        }
+    }
+
+    isOverlapping(e1, e2){
+        if( e1.length && e1.length > 1 ){
+        e1 = e1[0];
+        }
+        if( e2.length && e2.length > 1 ){
+        e2 = e2[0];
+        }
+        var rect1 = e1 instanceof Element ? e1.getBoundingClientRect() : false;
+        var rect2 = e2 instanceof Element ? e2.getBoundingClientRect() : false;
+        
+        var overlap = null;
+        if( rect1 && rect2 ){
+        overlap = !(
+            rect1.right < rect2.left || 
+            rect1.left > rect2.right || 
+            rect1.bottom < rect2.top || 
+            rect1.top > rect2.bottom
+            )
+        return overlap;  
+        } 
+        else {
+        return overlap;
         }
     }
 
