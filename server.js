@@ -42,7 +42,7 @@ io.on('connection', function(socket){
   });
   socket.on('updateTank', function(tankMoveData){
       //let tankMoveData = {'userID': myPlayer.userID, 'tankLeftOffset': myTankO.leftOffset, 'playerNumber': myTankO.tankOwner };
-      console.log("player: " + tankMoveData.playerNumber + " " + tankMoveData.tankLeftOffset);
+      //console.log("player: " + tankMoveData.playerNumber + " " + tankMoveData.tankLeftOffset);
       io.emit('updateTank', tankMoveData);
   });
   socket.on('updateTankAngle', function(tankAngleData){
@@ -56,7 +56,7 @@ io.on('connection', function(socket){
   */
   socket.on('tankFired', function(tankFireData){
     //let tankAngleData = {'userID': myPlayer.userID, 'tankAngleInverse': inverseAngle, 'playerNumber': myTankO.tankOwner };
-    console.log("player: " + tankFireData.userID + " has fired " + tankFireData.tankAngleInverse)
+    //console.log("player: " + tankFireData.userID + " has fired " + tankFireData.tankAngleInverse)
     io.emit('tankFired', tankFireData);
   });
 });

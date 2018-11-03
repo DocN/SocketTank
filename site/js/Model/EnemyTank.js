@@ -25,6 +25,7 @@ class EnemyTank {
     }
 
     fireShell() {
+        showEnemyShell();
         this.readyToFire = false;
         let tankShell = document.getElementById("enemyShell");
         tankShell.style.transform = "rotate("+ this.angle +"deg)";
@@ -49,7 +50,8 @@ class EnemyTank {
         this.firedX = this.firedX - xVelocity;
         tankShell.style.top = (this.firedY * -1) + "px";
         tankShell.style.left = this.firedX +  "px";
-        if(tankShell.offsetTop >= 1000) {
+        if(tankShell.style.top <= 0 || tankShell.offsetLeft >= 2000 || tankShell.offsetTop >=1000) {
+            hideEnemyShell();
             stopEnemyFireTimer();
         }
     }

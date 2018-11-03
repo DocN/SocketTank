@@ -30,6 +30,7 @@ class Tank {
     }
 
     fireShell() {
+        showMyShell();
         this.readyToFire = false;
         let tankShell = document.getElementById("myShell");
         tankShell.style.transform = "rotate("+ this.angle +"deg)";
@@ -53,7 +54,8 @@ class Tank {
         this.firedX = this.firedX - xVelocity;
         tankShell.style.top = this.firedY + "px";
         tankShell.style.left = this.firedX +  "px";
-        if(tankShell.style.top <= 0 || tankShell.style.left >= 1000) {
+        if(tankShell.style.top <= 0 || tankShell.offsetLeft >= 2000 || tankShell.offsetTop >=1000) {
+            hideMyShell();
             stopFireTimer();
         }
     }

@@ -190,3 +190,22 @@ function createEnemyShell() {
     tankShell.className = "bullet";
     return tankShell;
 }
+
+function showEnemyShell() {
+    let tankShell = document.getElementById("enemyShell");
+    tankShell.style.display = "block";
+}
+
+function hideEnemyShell() {
+    let tankShell = document.getElementById("enemyShell");
+    tankShell.style.display = "none";
+}
+
+function showMyShell() {
+    let tankShell = document.getElementById("myShell");
+    tankShell.style.display = "block";
+}
+function hideMyShell() {
+    let tankShell = document.getElementById("myShell");
+    tankShell.style.display = "none";
+}
