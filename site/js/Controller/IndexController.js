@@ -11,8 +11,8 @@ var currentMouseLocY;
 var myLives = 3;
 var enemyLives = 3;
 var maxLives = 3;
-var myName = "";
-var enemyName = "";
+var myName = "player";
+var enemyName = "player";
 
 
 $(document).ready(function() {
@@ -169,7 +169,6 @@ function fire() {
 
     }
     else {
-        
     }
     
 }
@@ -200,6 +199,7 @@ function moveEnemyTank(offset, direction, target) {
 function submitUser() {
     myPlayer = new Player($('#playerNameInput').val());
     let user = { 'username': myPlayer.username, 'userID': myPlayer.userID };
+    myName = myPlayer.username;
     socket.emit('player name', user);
 }
 
@@ -245,7 +245,6 @@ function updateEnemyLives() {
     let tankLifeData = {'userID': myPlayer.userID, 'score': enemyLives, 'playerNumber': myTankO.tankOwner };
     socket.emit('updateLives', tankLifeData);
 }
-
 
 
 

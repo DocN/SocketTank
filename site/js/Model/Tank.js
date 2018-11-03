@@ -58,6 +58,7 @@ class Tank {
             console.log("hit");
             enemyLives = enemyLives - 1;
             updateEnemyScoreView();
+            updateEnemyLives();
             hideMyShell();
             stopFireTimer();
         }

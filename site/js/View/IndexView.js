@@ -78,8 +78,6 @@ function createGameFrame() {
     let myTankRow = createMyTankRow();
     myTankContainer.appendChild(myTankRow);
 
-    gameFrame.appendChild(createMyScoreDiv());
-    gameFrame.appendChild(createEnemyScoreDiv());
     gameFrame.appendChild(createEnemyShell());
     gameFrame.appendChild(createMyShell());
     gameFrame.appendChild(enemyTankContainer);
@@ -92,7 +90,7 @@ function createGameFrame() {
 }
 
 function createScoreboard() {
-    let scores = document.getElementById("scores");
+    let scores = document.getElementById("bodyID");
     scores.appendChild(createMyScoreDiv());
 }
 
@@ -107,33 +105,31 @@ function createMyScoreDiv() {
     let myLivesTitle = document.createElement("h3");
     myLivesTitle.innerText = "Lives: " + myLives + "/" + maxLives;
     myLivesTitle.id= "myLivesTitle";
+
+    let enemyNameTitle = document.createElement("h3");
+    enemyNameTitle.id = "enemyNameTitle";
+    enemyNameTitle.innerText = "Opponent: " + enemyName;
+
+    let enemyLivesTitle = document.createElement("h3");
+    enemyLivesTitle.innerText = "Lives: " + enemyLives + "/" + maxLives;
+    enemyLivesTitle.id= "enemyLivesTitle";
+
     myScoreBox.appendChild(myNameTitle);
     myScoreBox.appendChild(myLivesTitle);
+    myScoreBox.appendChild(enemyNameTitle);
+    myScoreBox.appendChild(enemyLivesTitle);
     return myScoreBox;
 }
 
-function createEnemyScoreDiv() {
-    let myScoreBox = document.createElement("div");
-    myScoreBox.id = "enemyScoreBox";
-    
-    let myNameTitle = document.createElement("h3");
-    myNameTitle.id = "enemyNameTitle";
-    myNameTitle.innerText = "Opponent: " + enemyName;
-
-    let myLivesTitle = document.createElement("h3");
-    myLivesTitle.innerText = "Lives: " + enemyLives + "/" + maxLives;
-    myLivesTitle.id= "enemyLivesTitle";
-    myScoreBox.appendChild(myNameTitle);
-    myScoreBox.appendChild(myLivesTitle);
-    return myScoreBox;
-}
 
 function updateMyScoreView() {
-    document.getElementById("myNameTitle").innerText = myLives + "/" + maxLives;
+    document.getElementById("myScoreBox").remove();
+    document.getElementById("bodyID").appendChild(createMyScoreDiv());
 }
 
 function updateEnemyScoreView() {
-    document.getElementById("enemyNameTitle").innerText = enemyLives + "/" + maxLives;
+    document.getElementById("myScoreBox").remove();
+    document.getElementById("bodyID").appendChild(createMyScoreDiv());
 }
 
 function createContainer100() {
