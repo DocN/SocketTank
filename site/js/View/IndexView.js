@@ -87,8 +87,13 @@ function createGameFrame() {
     gameFrame.appendChild(myTankContainer);
 
     createScoreboard();
+    createControls();
 }
 
+function createControls() {
+    let controls = document.getElementById("controls");
+    controls.appendChild(createReset());
+}
 function createScoreboard() {
     let scores = document.getElementById("bodyID");
     scores.appendChild(createMyScoreDiv());
@@ -130,6 +135,11 @@ function updateMyScoreView() {
 function updateEnemyScoreView() {
     document.getElementById("myScoreBox").remove();
     document.getElementById("bodyID").appendChild(createMyScoreDiv());
+}
+
+function updateEnemyName(name) {
+    document.getElementById("enemyNameTitle").innerText ="opponent: " + name;
+
 }
 
 function createContainer100() {
@@ -248,10 +258,21 @@ function hideEnemyShell() {
 
 function showMyShell() {
     let tankShell = document.getElementById("myShell");
-    tankShell.style.display = "block";
+    if(tankShell != null) {
+        tankShell.style.display = "block";
+    }
+    
 }
 function hideMyShell() {
     let tankShell = document.getElementById("myShell");
     tankShell.style.display = "none";
+}
+
+function createReset() {
+    let reset = document.createElement("button");
+    reset.className = "btn btn-primary"; 
+    reset.innerText ="Reset Room";
+    reset.setAttribute("onclick", "resetRoom()")
+    return reset;
 }
 

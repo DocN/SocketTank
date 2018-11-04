@@ -33,6 +33,9 @@ class Tank {
         showMyShell();
         this.readyToFire = false;
         let tankShell = document.getElementById("myShell");
+        if(tankShell == null) {
+            return;
+        }
         tankShell.style.transform = "rotate("+ this.angle +"deg)";
         let tankLine = document.getElementById("myTank");
         var offset = $("#gameFrame").offset();
@@ -46,6 +49,9 @@ class Tank {
 
     moveShell() {
         let tankShell = document.getElementById("myShell");
+        if(tankShell == null) {
+            return;
+        }
         //console.log(parseInt(tankShell.style.left));
         let speed = this.fireRate; // pixels per tick
         let xVelocity = speed * Math.cos((this.firedAngle)/( 180 / Math.PI));

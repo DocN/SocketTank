@@ -13,6 +13,7 @@ var enemyLives = 3;
 var maxLives = 3;
 var myName = "player";
 var enemyName = "player";
+var ingame = false;
 
 
 $(document).ready(function() {
@@ -88,6 +89,18 @@ $(document).ready(function() {
                 updateMyScoreView(); 
             }
         });
+
+        socket.on('getName', function(username){
+            if(username != myName) {
+                enemyName = username;
+                updateEnemyName(enemyName);
+            }
+        });
+
+        socket.on('resetPage', function(){
+            console.log("resetting page");
+            resetPage();
+        });
     });
 });
 
@@ -121,8 +134,10 @@ $(function() {
 $(function() {
     $("#bodyID").mousemove(function(e) {
         var asyncFunct = new Promise(function(resolve, reject) {
-            reCalculateAngle(e);
-            emitNewAngle();
+            if(ingame) {
+                reCalculateAngle(e);
+                emitNewAngle();
+            }
         });
     });
 });
@@ -157,6 +172,9 @@ function emitNewAngle() {
 
 function emiteFired() {
     let inverseAngle = myTankO.inverseAngle();
+    if(myPlayer == null) {
+        return;
+    }
     let tankFireData = {'userID': myPlayer.userID, 'tankAngleInverse': inverseAngle, 'playerNumber': myTankO.tankOwner };
     socket.emit('tankFired', tankFireData);
 }
@@ -212,6 +230,7 @@ function updateTankMovement() {
 function startGame() {
     clearLoginPrompt();
     createGameFrame();
+    ingame = true;
 }
 
 function cursorLoc(e) {
@@ -246,5 +265,12 @@ function updateEnemyLives() {
     socket.emit('updateLives', tankLifeData);
 }
 
+function resetRoom() {
+    console.log("resetting room");
+    socket.emit("resetRoom");
+}
 
+function resetPage() {
+    location.reload();
+}
 

@@ -38,6 +38,11 @@ io.on('connection', function(socket){
       console.log(newPlayer.username + " has joined the game");
       let connectSuccessData = {'userID': newPlayer.userID, 'playerNumber': newPlayer.playerNumber}
       io.emit('connect success', connectSuccessData);
+      for(let i =0; i < players.length; i++) {
+        console.log(players[i].username);
+        io.emit('getName', players[i].username);
+      }
+      
     }
   });
   socket.on('updateTank', function(tankMoveData){
@@ -66,7 +71,11 @@ io.on('connection', function(socket){
     io.emit('updateLives', tankLifeData);
   });
 
-
+  socket.on('resetRoom', function(){
+    players = [];
+    console.log("resetting room");
+    io.emit("resetPage");
+  });
 });
 
 http.listen(3000, function(){
