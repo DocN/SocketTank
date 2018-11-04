@@ -12,6 +12,7 @@ class EnemyTank {
         this.firedAngle = 0;
     }
 
+    //sets the new angle of the enemy tank's turret
     setNewAngle(newAngle) {
         let tankLine = document.getElementById("enemyTankLine");
         if(tankLine == null) {
@@ -24,6 +25,7 @@ class EnemyTank {
         console.log("here dude");
     }
 
+    //fires the enemie's tank locally
     fireShell() {
         showEnemyShell();
         this.readyToFire = false;
@@ -39,7 +41,7 @@ class EnemyTank {
         tankShell.style.left = this.firedX + "px";
         this.firedAngle = this.angle - 90;
     }
-
+    //move the shell of the tank timer based
     moveShell() {
         let tankShell = document.getElementById("enemyShell");
         //console.log(parseInt(tankShell.style.left));

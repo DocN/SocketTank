@@ -12,6 +12,7 @@ class Tank {
         this.firedAngle = 0;
     }
 
+    //calculates the tank turret's current angle
     calculateAngle(mouseX, mouseY) {
         let tankX = this.leftOffset;
         console.log(tankX);
@@ -29,6 +30,7 @@ class Tank {
         tankLine.style.transformOrigin ="top center";
     }
 
+    //fires the shell from the tank
     fireShell() {
         showMyShell();
         this.readyToFire = false;
@@ -47,6 +49,7 @@ class Tank {
         this.firedAngle = this.angle - 90;
     }
 
+    //move the shell over time
     moveShell() {
         let tankShell = document.getElementById("myShell");
         if(tankShell == null) {
@@ -74,6 +77,7 @@ class Tank {
         }
     }
 
+    //check sif two objects are overlapping
     isOverlapping(e1, e2){
         if( e1.length && e1.length > 1 ){
         e1 = e1[0];
@@ -99,6 +103,7 @@ class Tank {
         }
     }
 
+    //inverts the angle for the inverted world view
     inverseAngle() {
         let inverse = this.angle +180 - 90;
         if(inverse > 360) {
